@@ -3,9 +3,10 @@ const URLmain = "https://fakestoreapi.com/products/";
 const ulMenu = document.getElementById("ulMenu");
 const Productos = document.getElementById("Productos");
 
-async function getData(cat = ""){
+async function getData(cat =""){
     const options = {"method" : "GET"};
-    await fetch(URLmain+cat, options)
+
+    fetch(URLmain+cat, options)
     .then((response)=>{
         console.log(response);
         response.json().then((res)=>{
@@ -14,14 +15,16 @@ async function getData(cat = ""){
         
     })
     .catch((err)=>{
-        main.insertAdjacentHTML("beforeend", `${err.message}`)
-
+        main.insertAdjacentHTML("beforeend", 
+            `<div class="alert alert-danger" role="alert">
+                ${err.message}
+            </div>`)
     });
 }//getData
 
 function createCards(products){
-   // Productos.innerHTML("");
-
+  
+   Productos.innerHTML = ""; 
     products.forEach(producto=>{
         Productos.insertAdjacentHTML("beforeend", 
                    `<div class="card" style="width: 18rem;">
@@ -40,7 +43,7 @@ function createCards(products){
 
 //createCards(URLmain);
 
-async function fetchingData(){
+async function fetchingData(){//crea las tarjetaas
     try{
         const res = await getData();
         main.insertAdjacentHTML("beforeend",
@@ -60,14 +63,18 @@ async function fetchingData(){
     }
 };
 
-///////////////////
+/////////////////// trae las categorias 
  function getCategories(){
-     const options = {'method' : "GET"};
+     const options = {"method" : "GET"};
+     
      fetch (URLmain+"categories/", options)
      .then((response)=>{
          response.json().then((res)=>{
              res.forEach((cat)=>{
-                 ulMenu.insertAdjacentHTML("afterbegin", `<li><a class="dropdown-item" onclick="getData('category/${cat}');">${cat}</a></li>`);
+                ulMenu.insertAdjacentHTML("afterbegin", 
+                    `<li><a class="dropdown-item" onclick="getData('category/${cat}')">${cat}</a></li>`);
+                 // `<li><a class="dropdown-item" onclick="getData('category/${encodeURIComponent(cat)}')">${cat}</a></li>`);
+
              });          
          });
      }).catch((err)=>{

@@ -5,4 +5,4 @@ Uso de fetch
 3. instalacion-set up
 4. como se usa
 5. ontaco(por sihay problemas )
-6. seccion de trouble shooting
+6. git seccion de trouble shooting
